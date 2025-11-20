@@ -130,7 +130,7 @@ const AboutStory = () => {
                   </div>
                 </div>
                 <div className="text-center group cursor-pointer">
-                  <div className="bg-gradient-to-br from-primary-red/20 to-primary-red/5 rounded-2xl p-6 border border-primary-red/30 group-hover:border-primary-red/60 transition-all duration-300">
+                  <div className="bg-gradient-to-br from-primary-red/20 to-primary-red/5 rounded-2xl p-6 border border-primary-golden/30 group-hover:border-primary-red/60 transition-all duration-300">
                     <h4 className="text-primary-red text-4xl font-black mb-2 group-hover:scale-110 transition-transform duration-300">★★★</h4>
                     <p className="text-gray-400 text-sm uppercase tracking-wider">Michelin Stars</p>
                   </div>
