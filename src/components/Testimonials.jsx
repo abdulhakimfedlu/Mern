@@ -1,6 +1,5 @@
 // src/components/Testimonials.jsx
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
 
 const testimonials = [
   {
@@ -27,88 +26,66 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const nextTestimonial = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
-
   return (
-    <section className="py-20 bg-primary-dark relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-primary-brown to-transparent" />
-      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary-brown to-transparent" />
-
-      <div className="container mx-auto px-6 relative z-10">
-        <motion.div 
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-5xl font-serif font-bold mb-4 text-white">Guest Experiences</h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Hear what our esteemed guests have to say about their time at Éclat
+    <section className="py-20 bg-gradient-to-b from-primary-dark to-primary-brown relative">
+      <div className="container mx-auto px-6">
+        
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4 text-white">
+            Guest Experiences
+          </h2>
+          <div className="w-24 h-1 bg-primary-gold mx-auto mb-6"></div>
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+            Discover what makes dining at Éclat an extraordinary experience
           </p>
-        </motion.div>
-
-        <div className="max-w-4xl mx-auto relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentIndex}
-              className="bg-primary-brown rounded-2xl p-8 shadow-2xl border border-primary-gold border-opacity-20"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="text-primary-gold text-2xl mb-4">
-                {"★".repeat(testimonials[currentIndex].rating)}
-              </div>
-              <p className="text-xl text-gray-300 italic mb-6 leading-relaxed">
-                "{testimonials[currentIndex].text}"
-              </p>
-              <div className="text-right">
-                <h4 className="text-white text-lg font-semibold">{testimonials[currentIndex].name}</h4>
-                <p className="text-primary-gold">{testimonials[currentIndex].role}</p>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Navigation Buttons */}
-          <div className="flex justify-center mt-8 space-x-4">
-            <button
-              onClick={prevTestimonial}
-              className="w-12 h-12 border-2 border-primary-gold text-primary-gold rounded-full flex items-center justify-center hover:bg-primary-gold hover:text-primary-dark transition-all duration-300"
-            >
-              ←
-            </button>
-            <button
-              onClick={nextTestimonial}
-              className="w-12 h-12 border-2 border-primary-gold text-primary-gold rounded-full flex items-center justify-center hover:bg-primary-gold hover:text-primary-dark transition-all duration-300"
-            >
-              →
-            </button>
-          </div>
-
-          {/* Dots Indicator */}
-          <div className="flex justify-center mt-6 space-x-2">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === currentIndex ? 'bg-primary-gold' : 'bg-gray-600'
-                }`}
-              />
-            ))}
-          </div>
         </div>
+
+        {/* Testimonials Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          {testimonials.map((testimonial, index) => (
+            <div
+              key={testimonial.id}
+              className="bg-primary-brown/50 backdrop-blur-sm rounded-xl p-6 border border-primary-gold/20 hover:border-primary-gold/40 transition-all duration-300 hover:transform hover:scale-105 group"
+            >
+              {/* Rating Stars */}
+              <div className="flex justify-center mb-4">
+                <div className="text-primary-gold text-xl">
+                  {"★".repeat(testimonial.rating)}
+                </div>
+              </div>
+
+              {/* Quote */}
+              <div className="text-center mb-6">
+                <p className="text-gray-300 italic leading-relaxed text-sm md:text-base">
+                  "{testimonial.text}"
+                </p>
+              </div>
+
+              {/* Author Info */}
+              <div className="text-center border-t border-primary-gold/20 pt-4">
+                <h4 className="text-white font-semibold text-lg mb-1">
+                  {testimonial.name}
+                </h4>
+                <p className="text-primary-gold text-sm">
+                  {testimonial.role}
+                </p>
+              </div>
+
+              {/* Hover Effect Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-primary-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl pointer-events-none"></div>
+            </div>
+          ))}
+        </div>
+
+        {/* Call to Action */}
+        <div className="text-center mt-16">
+          <p className="text-gray-400 mb-6">Ready to create your own memorable experience?</p>
+          <button className="bg-gradient-to-r from-primary-red to-red-700 hover:from-red-700 hover:to-red-900 text-white px-8 py-3 rounded-full font-semibold transition-colors duration-300 shadow-lg">
+            Reserve Your Table
+          </button>
+        </div>
+
       </div>
     </section>
   );
