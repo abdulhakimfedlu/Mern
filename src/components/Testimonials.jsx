@@ -29,7 +29,7 @@ const Testimonials = () => {
   return (
     <section className="py-20 bg-gradient-to-b from-primary-dark to-primary-brown relative">
       <div className="container mx-auto px-6">
-        
+
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4 text-white">
@@ -81,7 +81,7 @@ const Testimonials = () => {
         {/* Call to Action */}
         <div className="text-center mt-16">
           <p className="text-gray-400 mb-6">Ready to create your own memorable experience?</p>
-          <button className="bg-gradient-to-r from-primary-red to-red-700 hover:from-red-700 hover:to-red-900 text-white px-8 py-3 rounded-full font-semibold transition-colors duration-300 shadow-lg">
+          <button className="bg-gradient-to-r from-primary-gold to-yellow-600 hover:from-yellow-600 hover:to-primary-gold text-primary-dark px-10 py-5 rounded-full font-bold text-xl transition-colors duration-300 shadow-lg">
             Reserve Your Table
           </button>
         </div>

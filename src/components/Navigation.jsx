@@ -107,8 +107,8 @@ const Navigation = () => {
             ))}
           </motion.div>
           <motion.button
-            className="bg-gradient-to-r from-primary-red to-red-600 hover:from-red-600 hover:to-red-800 text-white px-6 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg shadow-primary-red/50"
-            whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(220, 38, 38, 0.6)" }}
+            className="bg-gradient-to-r from-primary-gold to-yellow-600 hover:from-yellow-600 hover:to-primary-gold text-primary-dark px-6 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg shadow-primary-gold/50"
+            whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(255, 215, 0, 0.6)" }}
             whileTap={{ scale: 0.95 }}
           >
             Reserve Table
@@ -167,8 +167,8 @@ const Navigation = () => {
               </motion.div>
             ))}
             <motion.button
-              className="w-full bg-gradient-to-r from-primary-red to-red-600 hover:from-red-600 hover:to-red-800 text-white py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg shadow-primary-red/50"
-              whileHover={{ scale: 1.02, boxShadow: "0 0 15px rgba(220, 38, 38, 0.5)" }}
+              className="w-full bg-gradient-to-r from-primary-gold to-yellow-600 hover:from-yellow-600 hover:to-primary-gold text-primary-dark py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg shadow-primary-gold/50"
+              whileHover={{ scale: 1.02, boxShadow: "0 0 15px rgba(255, 215, 0, 0.5)" }}
               whileTap={{ scale: 0.98 }}
             >
               Reserve Table
