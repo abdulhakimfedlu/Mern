@@ -102,20 +102,25 @@ const MenuPage = () => {
 
   return (
     <div className="pt-32">
-      {/* Hero Section */}
-      <section className="relative py-20 bg-primary-brown">
+      {/* Minimal Hero Section */}
+      <section className="relative py-8 bg-gradient-to-br from-primary-dark via-black to-primary-brown">
         <div className="container mx-auto px-6">
           <motion.div
-            className="text-center max-w-4xl mx-auto"
-            initial={{ opacity: 0, y: 50 }}
+            className="text-center"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
           >
-            <h1 className="text-6xl md:text-7xl font-serif font-bold mb-6 text-white">Our Menu</h1>
-            <p className="text-xl text-gray-300 leading-relaxed">
-              Discover our carefully crafted dishes, each telling a story of flavor, 
-              tradition, and innovation.
+            <h1 
+              className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary-gold via-white to-primary-gold mb-4 tracking-tight"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+            >
+              OUR MENU
+            </h1>
+            <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-6 leading-relaxed">
+              Discover our carefully curated selection of artisanal dishes, crafted with the finest ingredients and inspired by culinary traditions from around the world.
             </p>
+            <div className="h-px w-24 bg-gradient-to-r from-transparent via-primary-gold to-transparent mx-auto" />
           </motion.div>
         </div>
       </section>
@@ -162,7 +167,7 @@ const MenuPage = () => {
                   <img 
                     src={item.image} 
                     alt={item.name}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute top-4 right-4 bg-primary-gold text-primary-dark px-3 py-1 rounded-full font-bold">
                     ${item.price}
