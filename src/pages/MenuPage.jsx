@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 const MenuPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [cart, setCart] = useState({});
+  const [searchTerm, setSearchTerm] = useState('');
 
   const menuItems = {
     appetizers: [
@@ -55,6 +56,36 @@ const MenuPage = () => {
         price: 14,
         image: "https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
       }
+    ],
+    drinks: [
+      {
+        id: 7,
+        name: "Signature Cocktail",
+        description: "House special with premium spirits and fresh ingredients",
+        price: 16,
+        image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 8,
+        name: "Craft Beer Selection",
+        description: "Rotating selection of local and imported craft beers",
+        price: 8,
+        image: "https://images.unsplash.com/photo-1608270586620-248524c67de9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 9,
+        name: "Wine Pairing",
+        description: "Curated wine selection to complement your meal",
+        price: 12,
+        image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: 10,
+        name: "Artisan Coffee",
+        description: "Single-origin coffee beans, expertly roasted and brewed",
+        price: 6,
+        image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+      }
     ]
   };
 
@@ -63,6 +94,14 @@ const MenuPage = () => {
     { id: 'appetizers', name: 'Appetizers' },
     { id: 'mains', name: 'Main Courses' },
     { id: 'desserts', name: 'Desserts' }
+  ];
+
+  const drinkCategories = [
+    { id: 'drinks', name: 'All Drinks' },
+    { id: 'cocktails', name: 'Cocktails' },
+    { id: 'beer', name: 'Beer' },
+    { id: 'wine', name: 'Wine' },
+    { id: 'coffee', name: 'Coffee' }
   ];
 
   const addToCart = (itemId) => {
@@ -84,8 +123,13 @@ const MenuPage = () => {
     });
   };
 
+  // Helper function to get all items
+  const getAllItems = () => {
+    return [...menuItems.appetizers, ...menuItems.mains, ...menuItems.desserts, ...menuItems.drinks];
+  };
+
   const getCartItems = () => {
-    const allItems = [...menuItems.appetizers, ...menuItems.mains, ...menuItems.desserts];
+    const allItems = getAllItems();
     return Object.entries(cart).map(([id, quantity]) => {
       const item = allItems.find(item => item.id === parseInt(id));
       return { ...item, quantity };
@@ -96,9 +140,20 @@ const MenuPage = () => {
   const totalItems = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
   const totalPrice = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-  const filteredItems = selectedCategory === 'all' 
-    ? [...menuItems.appetizers, ...menuItems.mains, ...menuItems.desserts]
-    : menuItems[selectedCategory];
+  const filteredItems = (() => {
+    let items = selectedCategory === 'all' 
+      ? getAllItems()
+      : menuItems[selectedCategory] || [];
+    
+    if (searchTerm) {
+      items = items.filter(item => 
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+    
+    return items;
+  })();
 
   return (
     <div className="pt-32">
@@ -128,31 +183,82 @@ const MenuPage = () => {
       {/* Menu Navigation & Content */}
       <section className="py-20 bg-primary-dark">
         <div className="container mx-auto px-6">
-          {/* Category Filter */}
+          {/* Search Bar */}
           <motion.div
-            className="flex flex-wrap justify-center gap-4 mb-12"
+            className="max-w-md mx-auto mb-12"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-                  selectedCategory === category.id
-                    ? 'bg-primary-gold text-primary-dark'
-                    : 'bg-primary-brown text-gray-300 hover:text-white hover:bg-opacity-80'
-                }`}
-              >
-                {category.name}
-              </button>
-            ))}
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search menu items..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-6 py-4 bg-primary-brown text-white placeholder-gray-400 rounded-full border border-primary-gold/30 focus:border-primary-gold focus:outline-none transition-colors"
+              />
+              <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-primary-gold">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+            </div>
           </motion.div>
 
-          {/* Menu Items Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          <div className="flex gap-8">
+            {/* Left Sidebar - Drink Categories */}
+            <motion.div
+              className="w-64 flex-shrink-0"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <div className="bg-primary-brown rounded-2xl p-6 sticky top-32">
+                <h3 className="text-xl font-serif font-bold text-white mb-6">Beverages</h3>
+                <div className="space-y-3">
+                  {drinkCategories.map((category) => (
+                    <button
+                      key={category.id}
+                      onClick={() => setSelectedCategory(category.id)}
+                      className={`w-full text-left px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
+                        selectedCategory === category.id
+                          ? 'bg-primary-gold text-primary-dark'
+                          : 'text-gray-300 hover:text-white hover:bg-primary-dark/50'
+                      }`}
+                    >
+                      {category.name}
+                    </button>
+                  ))}
+                </div>
+                
+                <div className="mt-8 pt-6 border-t border-primary-gold/30">
+                  <h4 className="text-lg font-serif font-bold text-white mb-4">Food Categories</h4>
+                  <div className="space-y-2">
+                    {categories.map((category) => (
+                      <button
+                        key={category.id}
+                        onClick={() => setSelectedCategory(category.id)}
+                        className={`w-full text-left px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                          selectedCategory === category.id
+                            ? 'bg-primary-gold text-primary-dark'
+                            : 'text-gray-400 hover:text-white hover:bg-primary-dark/50'
+                        }`}
+                      >
+                        {category.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Main Content Area */}
+            <div className="flex-1">
+              {/* Menu Items Grid */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredItems.map((item, index) => (
               <motion.div
                 key={item.id}
@@ -200,6 +306,22 @@ const MenuPage = () => {
                 </div>
               </motion.div>
             ))}
+              </div>
+              
+              {/* No Results Message */}
+              {filteredItems.length === 0 && (
+                <motion.div
+                  className="text-center py-12"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="text-gray-400 text-lg">
+                    {searchTerm ? `No items found for "${searchTerm}"` : 'No items in this category'}
+                  </div>
+                </motion.div>
+              )}
+            </div>
           </div>
         </div>
       </section>
