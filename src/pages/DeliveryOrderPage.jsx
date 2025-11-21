@@ -18,7 +18,7 @@ const DeliveryOrderPage = () => {
 
   // Get cart data from location state or context (in real app)
   const cartItems = location.state?.cartItems || [];
-  
+
   const deliveryFee = 5.99;
   const taxRate = 0.0875;
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -51,7 +51,7 @@ const DeliveryOrderPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate API call
     setTimeout(() => {
       console.log('Delivery order submitted:', { orderDetails, items: cartItems });
@@ -77,10 +77,10 @@ const DeliveryOrderPage = () => {
             >
               <div className="inline-flex items-center justify-center w-20 h-20 bg-primary-gold rounded-full mb-6">
                 <svg className="w-10 h-10 text-primary-dark" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zM10 6a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2v10z"/>
+                  <path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zM10 6a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2v10z" />
                 </svg>
               </div>
-              <h1 
+              <h1
                 className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary-gold via-white to-primary-gold mb-4 tracking-tight"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
@@ -111,19 +111,19 @@ const DeliveryOrderPage = () => {
                         {totalItems} {totalItems === 1 ? 'item' : 'items'}
                       </div>
                     </div>
-                    
+
                     <div className="space-y-6 mb-8">
                       {cartItems.map((item, index) => (
-                        <motion.div 
-                          key={item.id} 
+                        <motion.div
+                          key={item.id}
                           className="flex items-center gap-4 p-4 bg-primary-dark/50 rounded-2xl border border-primary-gold/10"
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.4, delay: index * 0.1 }}
                         >
                           <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
-                            <img 
-                              src={item.image} 
+                            <img
+                              src={item.image}
                               alt={item.name}
                               className="w-full h-full object-cover"
                             />
@@ -201,7 +201,7 @@ const DeliveryOrderPage = () => {
                 </div>
 
                 <div className="space-y-4 mb-6">
-                  <motion.label 
+                  <motion.label
                     className="flex items-center space-x-4 p-6 border-2 border-primary-gold/30 rounded-2xl hover:border-primary-gold cursor-pointer transition-all duration-300 bg-primary-dark/30"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -226,7 +226,7 @@ const DeliveryOrderPage = () => {
                     </div>
                   </motion.label>
 
-                  <motion.label 
+                  <motion.label
                     className="flex items-center space-x-4 p-6 border-2 border-primary-gold/30 rounded-2xl hover:border-primary-gold cursor-pointer transition-all duration-300 bg-primary-dark/30"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -380,30 +380,42 @@ const DeliveryOrderPage = () => {
               </div>
 
               <div className="mt-10 space-y-6">
-                <motion.button
-                  type="submit"
-                  disabled={isSubmitting || cartItems.length === 0 || !orderDetails.paymentMethod || (orderDetails.paymentMethod === 'bank_transfer' && !orderDetails.paymentScreenshot)}
-                  className="w-full bg-gradient-to-r from-primary-gold to-yellow-500 text-primary-dark py-5 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                  whileHover={{ scale: isSubmitting || cartItems.length === 0 || !orderDetails.paymentMethod || (orderDetails.paymentMethod === 'bank_transfer' && !orderDetails.paymentScreenshot) ? 1 : 1.02 }}
-                  whileTap={{ scale: isSubmitting || cartItems.length === 0 || !orderDetails.paymentMethod || (orderDetails.paymentMethod === 'bank_transfer' && !orderDetails.paymentScreenshot) ? 1 : 0.98 }}
-                >
-                  {isSubmitting ? (
-                    <div className="flex items-center justify-center">
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-primary-dark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Processing Order...
-                    </div>
-                  ) : (
-                    <>
-                      <svg className="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      Place Delivery Order
-                    </>
-                  )}
-                </motion.button>
+                {(() => {
+                  const isFormValid = orderDetails.customerName.trim() &&
+                    orderDetails.phone.trim() &&
+                    orderDetails.address.trim() &&
+                    orderDetails.paymentMethod &&
+                    (orderDetails.paymentMethod !== 'bank_transfer' || orderDetails.paymentScreenshot);
+                  const isDisabled = isSubmitting || cartItems.length === 0 || !isFormValid;
+
+                  return (
+                    <motion.button
+                      type="submit"
+                      disabled={isDisabled}
+                      className="w-full bg-gradient-to-r from-primary-gold to-yellow-500 text-primary-dark py-5 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                      whileHover={{ scale: isDisabled ? 1 : 1.02 }}
+                      whileTap={{ scale: isDisabled ? 1 : 0.98 }}
+                    >
+                      {isSubmitting ? (
+                        <div className="flex items-center justify-center">
+                          <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-primary-dark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Processing Order...
+                        </div>
+                      ) : (
+                        <>
+                          <svg className="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          Place Delivery Order
+                        </>
+                      )}
+                    </motion.button>
+                  );
+                })()}
+
 
                 <div className="border-t border-primary-gold/20 pt-4">
                   <Link to="/menu">
@@ -431,16 +443,16 @@ const DeliveryOrderPage = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.8 }}
           >
-            <motion.div 
+            <motion.div
               className="group relative bg-gradient-to-br from-primary-brown/60 to-primary-dark/80 rounded-3xl p-8 border border-primary-gold/20 text-center overflow-hidden cursor-pointer"
               whileHover={{ scale: 1.05, rotateY: 5 }}
               transition={{ duration: 0.3 }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-primary-gold/0 to-primary-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute inset-0 rounded-3xl shadow-[0_0_50px_rgba(255,215,0,0)] group-hover:shadow-[0_0_50px_rgba(255,215,0,0.3)] transition-all duration-500" />
-              
+
               <div className="relative z-10">
-                <motion.div 
+                <motion.div
                   className="w-16 h-16 bg-gradient-to-br from-primary-gold/30 to-primary-gold/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gradient-to-br group-hover:from-primary-gold/50 group-hover:to-primary-gold/20 transition-all duration-300"
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.6 }}
@@ -457,17 +469,17 @@ const DeliveryOrderPage = () => {
                 </p>
               </div>
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
               className="group relative bg-gradient-to-br from-primary-brown/60 to-primary-dark/80 rounded-3xl p-8 border border-primary-gold/20 text-center overflow-hidden cursor-pointer"
               whileHover={{ scale: 1.05, rotateY: -5 }}
               transition={{ duration: 0.3 }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-primary-gold/0 to-primary-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute inset-0 rounded-3xl shadow-[0_0_50px_rgba(255,215,0,0)] group-hover:shadow-[0_0_50px_rgba(255,215,0,0.3)] transition-all duration-500" />
-              
+
               <div className="relative z-10">
-                <motion.div 
+                <motion.div
                   className="w-16 h-16 bg-gradient-to-br from-primary-gold/30 to-primary-gold/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gradient-to-br group-hover:from-primary-gold/50 group-hover:to-primary-gold/20 transition-all duration-300"
                   whileHover={{ rotate: -360 }}
                   transition={{ duration: 0.6 }}
@@ -484,17 +496,17 @@ const DeliveryOrderPage = () => {
                 </p>
               </div>
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
               className="group relative bg-gradient-to-br from-primary-brown/60 to-primary-dark/80 rounded-3xl p-8 border border-primary-gold/20 text-center overflow-hidden cursor-pointer"
               whileHover={{ scale: 1.05, rotateY: 5 }}
               transition={{ duration: 0.3 }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-primary-gold/0 to-primary-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute inset-0 rounded-3xl shadow-[0_0_50px_rgba(255,215,0,0)] group-hover:shadow-[0_0_50px_rgba(255,215,0,0.3)] transition-all duration-500" />
-              
+
               <div className="relative z-10">
-                <motion.div 
+                <motion.div
                   className="w-16 h-16 bg-gradient-to-br from-primary-gold/30 to-primary-gold/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gradient-to-br group-hover:from-primary-gold/50 group-hover:to-primary-gold/20 transition-all duration-300"
                   whileHover={{ rotate: 360, scale: 1.1 }}
                   transition={{ duration: 0.6 }}
