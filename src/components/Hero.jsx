@@ -3,120 +3,84 @@ import React from 'react';
 
 const Hero = () => {
   return (
-    <section className="relative h-screen overflow-hidden bg-gradient-to-br from-primary-dark via-black to-primary-dark">
-      {/* Static Background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary-dark/90 via-primary-red/20 to-primary-gold/30" />
+    <section className="relative min-h-screen overflow-hidden bg-primary-dark flex items-center">
+      {/* Background Elements */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-primary-dark to-black opacity-90" />
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary-red/10 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-t from-primary-gold/5 to-transparent" />
 
-      {/* Subtle Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-      {/* Main Content Layout */}
-      <div className="relative z-10 flex items-start justify-center h-full px-6 pt-16">
-        <div className="max-w-7xl w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-
-            {/* Text Content */}
-            <div className="text-center lg:text-left pt-24">
-              <div className="mb-8">
-                <h1
-                  className="text-6xl md:text-8xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary-gold via-white to-primary-red mb-4 tracking-tight"
-                  style={{
-                    fontFamily: "'Playfair Display', serif"
-                  }}
-                >
-                  ÉCLAT
-                </h1>
-                <div className="h-1 w-32 bg-gradient-to-r from-transparent via-primary-gold to-transparent mx-auto lg:mx-0 rounded-full" />
-              </div>
-
-              <p className="text-xl md:text-2xl mb-12 text-gray-200 font-light tracking-wide leading-relaxed">
-                Where Culinary Art Meets Extraordinary Experience
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start items-center">
-                <button className="bg-gradient-to-r from-primary-gold to-yellow-600 hover:from-yellow-600 hover:to-primary-gold text-primary-dark px-10 py-5 rounded-full font-bold text-xl transition-colors duration-300 shadow-lg">
-                  Explore Menu
-                </button>
-
-                <button className="border-2 border-primary-gold text-primary-gold hover:bg-primary-gold hover:text-primary-dark px-10 py-5 rounded-full font-bold text-xl transition-colors duration-300">
-                  Reserve Table
-                </button>
-              </div>
+          {/* Text Content */}
+          <div className="text-center lg:text-left order-2 lg:order-1">
+            <div className="inline-block mb-6 px-4 py-1.5 border border-primary-gold/30 rounded-full bg-primary-gold/5 backdrop-blur-sm">
+              <span className="text-primary-gold text-sm font-medium tracking-wider uppercase">
+                Experience Fine Dining
+              </span>
             </div>
 
-            {/* 3D Photo Layout - Better Separated */}
-            <div className="relative flex justify-center lg:justify-end mt-24 lg:mt-32">
-              <div className="relative w-full max-w-3xl h-[500px] md:h-[550px]" style={{ perspective: '1200px' }}>
+            <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight tracking-tight">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary-gold via-white to-primary-gold bg-300% animate-gradient">
+                ÉCLAT
+              </span>
+              <span className="block text-3xl md:text-5xl font-light text-gray-300 mt-2 font-serif italic">
+                Taste the Extraordinary
+              </span>
+            </h1>
 
-                {/* Top Left Photo - White & Golden Border */}
-                <div
-                  className="absolute top-0 left-6 w-72 h-52 md:w-80 md:h-60 transition-all duration-300 hover:translate-y-[-10px] hover:rotate-[-3deg] hover:scale-105 cursor-pointer group"
-                  style={{
-                    transform: 'rotateY(-12deg) rotateX(8deg)',
-                    transformStyle: 'preserve-3d',
-                    zIndex: 2
-                  }}
-                >
-                  <div className="relative w-full h-full rounded-xl overflow-hidden border-4 border-white shadow-xl group-hover:shadow-2xl group-hover:border-primary-gold transition-all duration-300">
-                    <img
-                      src="/card1.jpg"
-                      alt="Éclat Experience 1"
-                      className="w-full h-full object-cover group-hover:brightness-110 group-hover:contrast-105 transition-all duration-300"
-                      loading="eager"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-br from-transparent to-white/10 group-hover:to-primary-gold/10 transition-all duration-300"></div>
-                    <div className="absolute inset-0 bg-white/0 group-hover:bg-primary-gold/5 transition-all duration-300"></div>
-                  </div>
-                </div>
+            <p className="text-lg md:text-xl text-gray-400 mb-10 leading-relaxed max-w-lg mx-auto lg:mx-0">
+              Immerse yourself in a symphony of flavors where culinary artistry meets an unforgettable atmosphere.
+            </p>
 
-                {/* Top Right Photo - White & Golden Border */}
-                <div
-                  className="absolute top-0 right-6 w-72 h-52 md:w-80 md:h-60 transition-all duration-300 hover:translate-y-[-10px] hover:rotate-[3deg] hover:scale-105 cursor-pointer group"
-                  style={{
-                    transform: 'rotateY(12deg) rotateX(8deg)',
-                    transformStyle: 'preserve-3d',
-                    zIndex: 2
-                  }}
-                >
-                  <div className="relative w-full h-full rounded-xl overflow-hidden border-4 border-white shadow-xl group-hover:shadow-2xl group-hover:border-primary-gold transition-all duration-300">
-                    <img
-                      src="/card2.jpg"
-                      alt="Éclat Experience 2"
-                      className="w-full h-full object-cover group-hover:brightness-110 group-hover:contrast-105 transition-all duration-300"
-                      loading="eager"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-bl from-transparent to-white/10 group-hover:to-primary-gold/10 transition-all duration-300"></div>
-                    <div className="absolute inset-0 bg-white/0 group-hover:bg-primary-gold/5 transition-all duration-300"></div>
-                  </div>
-                </div>
-
-                {/* Bottom Center Photo - White & Golden Border */}
-                <div
-                  className="absolute top-32 md:top-36 left-1/2 transform -translate-x-1/2 w-80 h-56 md:w-88 md:h-64 transition-all duration-300 hover:translate-y-[-12px] hover:scale-110 cursor-pointer group"
-                  style={{
-                    transform: 'translateX(-50%) rotateX(-15deg) translateZ(25px)',
-                    transformStyle: 'preserve-3d',
-                    zIndex: 3
-                  }}
-                >
-                  <div className="relative w-full h-full rounded-xl overflow-hidden border-4 border-white shadow-2xl group-hover:shadow-3xl group-hover:border-primary-gold transition-all duration-300">
-                    <img
-                      src="/card3.jpg"
-                      alt="Éclat Experience 3"
-                      className="w-full h-full object-cover group-hover:brightness-110 group-hover:contrast-105 transition-all duration-300"
-                      loading="eager"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-transparent to-white/10 group-hover:to-primary-gold/10 transition-all duration-300"></div>
-                    <div className="absolute inset-0 bg-white/0 group-hover:bg-primary-gold/5 transition-all duration-300"></div>
-                  </div>
-                </div>
-
-              </div>
+            <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start">
+              <button className="px-8 py-4 bg-primary-gold text-primary-dark font-bold rounded-full hover:bg-white transition-colors duration-300 shadow-lg shadow-primary-gold/20">
+                Explore Menu
+              </button>
+              <button className="px-8 py-4 border border-white/20 text-white font-medium rounded-full hover:bg-white/10 transition-colors duration-300 backdrop-blur-sm">
+                Book a Table
+              </button>
             </div>
+          </div>
+
+          {/* Image Composition */}
+          <div className="relative order-1 lg:order-2 h-[500px] md:h-[600px] w-full flex items-center justify-center lg:justify-end">
+
+            {/* Main Large Image */}
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3/4 h-3/4 z-10 rounded-2xl overflow-hidden shadow-2xl border border-white/10 group">
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+              <img
+                src="/card1.jpg"
+                alt="Signature Dish"
+                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+
+            {/* Top Floating Image */}
+            <div className="absolute top-0 left-0 w-1/2 h-1/2 z-20 rounded-2xl overflow-hidden shadow-xl border border-white/10 transform hover:-translate-y-2 transition-transform duration-500">
+              <img
+                src="/card2.jpg"
+                alt="Chef Detail"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Bottom Floating Image */}
+            <div className="absolute bottom-10 left-10 w-6/12 h-5/12 z-30 rounded-2xl overflow-hidden shadow-xl border border-white/10 transform hover:translate-y-2 transition-transform duration-500">
+              <img
+                src="/card3.jpg"
+                alt="Ambiance"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Decorative Elements */}
+            <div className="absolute -z-10 top-1/2 right-1/4 w-64 h-64 bg-primary-gold/20 rounded-full blur-3xl" />
+            <div className="absolute -z-10 bottom-0 left-0 w-48 h-48 bg-primary-red/20 rounded-full blur-3xl" />
+
           </div>
         </div>
       </div>
-
     </section>
   );
 };
