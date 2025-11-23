@@ -5,12 +5,11 @@ import { motion } from 'framer-motion';
 const ContactPage = () => {
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
-    phone: '',
-    subject: '',
+    description: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isAnonymous, setIsAnonymous] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -29,9 +28,7 @@ const ContactPage = () => {
       alert('Thank you for your message! We will get back to you soon.');
       setFormData({
         name: '',
-        email: '',
-        phone: '',
-        subject: '',
+        description: '',
         message: ''
       });
       setIsSubmitting(false);
@@ -161,9 +158,17 @@ const ContactPage = () => {
                   <p className="text-gray-400">We'll get back to you within 24 hours</p>
                 </div>
                 
-                <div className="grid md:grid-cols-2 gap-6 mb-6">
-                  <div>
-                    <label className="block text-primary-gold font-semibold mb-3">Name *</label>
+                {!isAnonymous && (
+                  <motion.div
+                    initial={{ opacity: 1, height: 'auto' }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="mb-6"
+                  >
+                    <label className="block text-primary-gold font-semibold mb-3">
+                      Name *
+                    </label>
                     <input
                       type="text"
                       name="name"
@@ -173,20 +178,8 @@ const ContactPage = () => {
                       className="w-full bg-primary-dark/50 border-2 border-primary-gold/30 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-primary-gold transition-all duration-300 placeholder-gray-500"
                       placeholder="Your full name"
                     />
-                  </div>
-                  <div>
-                    <label className="block text-primary-gold font-semibold mb-3">Email *</label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full bg-primary-dark/50 border-2 border-primary-gold/30 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-primary-gold transition-all duration-300 placeholder-gray-500"
-                      placeholder="your@email.com"
-                    />
-                  </div>
-                </div>
+                  </motion.div>
+                )}
 
                 <div className="grid md:grid-cols-2 gap-6 mb-6">
                   <div>
@@ -218,7 +211,7 @@ const ContactPage = () => {
                   </div>
                 </div>
 
-                <div className="mb-8">
+                <div className="mb-6">
                   <label className="block text-primary-gold font-semibold mb-3">Message *</label>
                   <textarea
                     name="message"
@@ -231,8 +224,60 @@ const ContactPage = () => {
                   />
                 </div>
 
+                {isAnonymous && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="mb-6"
+                  >
+                    <label className="block text-primary-gold font-semibold mb-3">Description *</label>
+                    <textarea
+                      name="description"
+                      value={formData.description}
+                      onChange={handleChange}
+                      required
+                      rows="3"
+                      className="w-full bg-primary-dark/50 border-2 border-primary-gold/30 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-primary-gold transition-all duration-300 resize-none placeholder-gray-500"
+                      placeholder="Provide a brief description..."
+                    />
+                  </motion.div>
+                )}
+
+                <div className="mb-8">
+                  <motion.button
+                    type="button"
+                    onClick={() => setIsAnonymous(!isAnonymous)}
+                    className={`relative inline-flex items-center px-6 py-3 rounded-full transition-all duration-300 ${
+                      isAnonymous
+                        ? 'bg-primary-gold text-primary-dark'
+                        : 'bg-primary-dark/50 text-gray-300 border-2 border-primary-gold/30'
+                    }`}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <span className={`mr-3 text-sm font-semibold ${isAnonymous ? 'text-primary-dark' : 'text-primary-gold'}`}>
+                      {isAnonymous ? 'Anonymous' : 'Identified'}
+                    </span>
+                    <motion.div
+                      className={`w-5 h-5 rounded-full ${
+                        isAnonymous ? 'bg-primary-dark' : 'bg-primary-gold'
+                      }`}
+                      layout
+                      transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                    />
+                  </motion.button>
+                  <p className="text-gray-400 text-sm mt-2">
+                    {isAnonymous
+                      ? 'Your message will be sent anonymously. Only the message is required.'
+                      : 'Provide your details for a personalized response.'
+                    }
+                  </p>
+                </div>
+
                 {(() => {
-                  const isFormValid = formData.name.trim() && formData.email.trim() && formData.message.trim();
+                  const isFormValid = (!isAnonymous ? formData.name.trim() : true) && formData.message.trim() && (!isAnonymous || formData.description.trim());
                   const isDisabled = isSubmitting || !isFormValid;
                   
                   return (

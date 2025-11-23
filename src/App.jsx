@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import AboutPage from './pages/AboutPage';
 import MenuPage from './pages/MenuPage';
 import ContactPage from './pages/ContactPage';
+import ReservationPage from './pages/ReservationPage';
 import CafeOrderPage from './pages/CafeOrderPage';
 import DeliveryOrderPage from './pages/DeliveryOrderPage';
 
@@ -36,6 +37,7 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/menu" element={<MenuPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/reservation" element={<ReservationPage />} />
           <Route path="/order/cafe" element={<CafeOrderPage />} />
           <Route path="/order/delivery" element={<DeliveryOrderPage />} />
         </Routes>
