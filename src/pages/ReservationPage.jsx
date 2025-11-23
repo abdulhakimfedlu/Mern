@@ -28,81 +28,56 @@ const ReservationPage = () => {
     setTimeout(() => {
       setIsSubmitted(true);
       setIsSubmitting(false);
+      setFormData({ name: '', phone: '', date: '', time: '', guests: '', occasion: '' });
     }, 2000);
   };
 
   return (
-    <div className="min-h-screen bg-black flex flex-col lg:flex-row">
-
-      {/* Left Side - Visual & Info */}
-      <div className="lg:w-5/12 relative hidden lg:flex flex-col justify-between p-12 overflow-hidden">
-        {/* Background Image with Overlay */}
-        <div className="absolute inset-0 z-0">
+    <div className="min-h-screen bg-black">
+      {/* Hero Section */}
+      <div className="relative h-[60vh] min-h-[500px] w-full overflow-hidden">
+        <div className="absolute inset-0">
           <img
             src="/card3.jpg"
-            alt="Ambiance"
-            className="w-full h-full object-cover opacity-60"
+            alt="Reservation Ambiance"
+            className="w-full h-full object-cover opacity-50"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/90" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/60 to-black" />
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 mt-20">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            className="text-6xl md:text-8xl font-black text-white mb-6 tracking-tight"
           >
-            <h1 className="text-5xl xl:text-7xl font-black text-white mb-6 leading-tight">
-              Reserve <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-gold to-yellow-200 font-serif italic">
-                Your Table
-              </span>
-            </h1>
-            <p className="text-gray-300 text-lg max-w-md leading-relaxed border-l-2 border-primary-gold pl-6">
-              Experience the pinnacle of culinary artistry. Whether for a romantic evening or a business celebration, we promise an unforgettable journey.
-            </p>
-          </motion.div>
-        </div>
-
-        <div className="relative z-10">
-          <div className="flex flex-col gap-4 text-gray-400">
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-primary-gold/10 flex items-center justify-center text-primary-gold">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-              </div>
-              <span></span>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-primary-gold/10 flex items-center justify-center text-primary-gold">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-              </div>
-              <span>reservations@eclat.com</span>
-            </div>
-          </div>
+            Reserve <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-gold to-yellow-200 font-serif italic">Your Table</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-xl text-gray-300 max-w-2xl font-light"
+          >
+            Experience the pinnacle of culinary artistry. Secure your spot for an unforgettable evening.
+          </motion.p>
         </div>
       </div>
 
-      {/* Right Side - Form */}
-      <div className="lg:w-7/12 bg-primary-dark relative flex items-center justify-center p-6 lg:p-12 min-h-screen">
-        {/* Background Gradients */}
-        <div className="absolute top-0 right-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary-gold/5 rounded-full blur-3xl" />
-          <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-primary-red/5 rounded-full blur-3xl" />
-        </div>
-
+      {/* Form Section */}
+      <div className="relative z-20 -mt-24 container mx-auto px-4 pb-32">
         <motion.div
-          className="w-full max-w-2xl relative z-10"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="max-w-4xl mx-auto"
         >
           {!isSubmitted ? (
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <div className="text-center lg:text-left mb-12 lg:hidden">
-                <h1 className="text-4xl font-black text-white mb-2">Reserve Your Table</h1>
-                <p className="text-gray-400">Join us for an unforgettable dining experience.</p>
+            <form onSubmit={handleSubmit} className="bg-white/5 p-8 md:p-12 rounded-3xl border border-white/10 backdrop-blur-sm shadow-2xl space-y-8">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-serif font-bold text-white mb-2">Book a Table</h2>
+                <div className="w-16 h-1 bg-primary-gold mx-auto rounded-full" />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -114,7 +89,7 @@ const ReservationPage = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full bg-white/5 border-b border-white/10 px-0 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-primary-gold transition-colors duration-300"
+                    className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-primary-gold focus:bg-black/40 transition-all duration-300"
                     placeholder="Abdu"
                   />
                 </div>
@@ -126,8 +101,8 @@ const ReservationPage = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     required
-                    className="w-full bg-white/5 border-b border-white/10 px-0 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-primary-gold transition-colors duration-300"
-                    placeholder="09-----"
+                    className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-primary-gold focus:bg-black/40 transition-all duration-300"
+                    placeholder="+251 911 234 567"
                   />
                 </div>
               </div>
@@ -141,7 +116,7 @@ const ReservationPage = () => {
                     value={formData.date}
                     onChange={handleChange}
                     required
-                    className="w-full bg-white/5 border-b border-white/10 px-0 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-primary-gold transition-colors duration-300"
+                    className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-primary-gold focus:bg-black/40 transition-all duration-300 [color-scheme:dark]"
                   />
                 </div>
                 <div className="group">
@@ -152,7 +127,7 @@ const ReservationPage = () => {
                     value={formData.time}
                     onChange={handleChange}
                     required
-                    className="w-full bg-white/5 border-b border-white/10 px-0 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-primary-gold transition-colors duration-300"
+                    className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-primary-gold focus:bg-black/40 transition-all duration-300 [color-scheme:dark]"
                   />
                 </div>
               </div>
@@ -160,46 +135,56 @@ const ReservationPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="group">
                   <label className="block text-primary-gold text-sm font-bold uppercase tracking-wider mb-2">Guests</label>
-                  <select
-                    name="guests"
-                    value={formData.guests}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-white/5 border-b border-white/10 px-0 py-3 text-white focus:outline-none focus:border-primary-gold transition-colors duration-300 [&>option]:bg-primary-dark"
-                  >
-                    <option value="">Select guests</option>
-                    {[1, 2, 3, 4, 5, 6, 7, 8].map(num => (
-                      <option key={num} value={num}>{num} {num === 1 ? 'Guest' : 'Guests'}</option>
-                    ))}
-                    <option value="more">8+ Guests</option>
-                  </select>
+                  <div className="relative">
+                    <select
+                      name="guests"
+                      value={formData.guests}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-4 text-white focus:outline-none focus:border-primary-gold focus:bg-black/40 transition-all duration-300 appearance-none cursor-pointer"
+                    >
+                      <option value="" className="bg-primary-dark text-gray-400">Select guests</option>
+                      {[1, 2, 3, 4, 5, 6, 7, 8].map(num => (
+                        <option key={num} value={num} className="bg-primary-dark">{num} {num === 1 ? 'Guest' : 'Guests'}</option>
+                      ))}
+                      <option value="more" className="bg-primary-dark">8+ Guests</option>
+                    </select>
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary-gold">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                  </div>
                 </div>
                 <div className="group">
                   <label className="block text-primary-gold text-sm font-bold uppercase tracking-wider mb-2">Occasion</label>
-                  <select
-                    name="occasion"
-                    value={formData.occasion}
-                    onChange={handleChange}
-                    className="w-full bg-white/5 border-b border-white/10 px-0 py-3 text-white focus:outline-none focus:border-primary-gold transition-colors duration-300 [&>option]:bg-primary-dark"
-                  >
-                    <option value="">Select occasion (optional)</option>
-                    <option value="birthday">Birthday</option>
-                    <option value="anniversary">Anniversary</option>
-                    <option value="business">Business</option>
-                    <option value="date">Date Night</option>
-                  </select>
+                  <div className="relative">
+                    <select
+                      name="occasion"
+                      value={formData.occasion}
+                      onChange={handleChange}
+                      className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-4 text-white focus:outline-none focus:border-primary-gold focus:bg-black/40 transition-all duration-300 appearance-none cursor-pointer"
+                    >
+                      <option value="" className="bg-primary-dark text-gray-400">Select occasion (optional)</option>
+                      <option value="birthday" className="bg-primary-dark">Birthday</option>
+                      <option value="anniversary" className="bg-primary-dark">Anniversary</option>
+                      <option value="business" className="bg-primary-dark">Business</option>
+                      <option value="date" className="bg-primary-dark">Date Night</option>
+                    </select>
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary-gold">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="pt-8">
+              <div className="pt-8 text-center">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-primary-gold text-primary-dark font-bold py-5 rounded-none hover:bg-white transition-all duration-300 tracking-widest uppercase disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full md:w-auto px-16 bg-gradient-to-r from-primary-gold to-yellow-600 text-primary-dark font-bold py-4 rounded-full hover:shadow-lg hover:shadow-primary-gold/20 hover:scale-105 transition-all duration-300 tracking-widest uppercase disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   {isSubmitting ? 'Confirming...' : 'Confirm Reservation'}
                 </button>
-                <p className="text-center text-gray-500 text-sm mt-4">
+                <p className="text-gray-500 text-sm mt-4">
                   By booking, you agree to our reservation policy.
                 </p>
               </div>
@@ -208,23 +193,23 @@ const ReservationPage = () => {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-center p-12 border border-primary-gold/20 bg-white/5 backdrop-blur-sm"
+              className="text-center p-16 border border-primary-gold/20 bg-white/5 backdrop-blur-sm rounded-3xl shadow-2xl"
             >
-              <div className="w-20 h-20 bg-primary-gold/20 rounded-full flex items-center justify-center mx-auto mb-6 text-primary-gold">
-                <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+              <div className="w-24 h-24 bg-primary-gold/20 rounded-full flex items-center justify-center mx-auto mb-8 text-primary-gold">
+                <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
               </div>
-              <h2 className="text-3xl font-serif text-white mb-4">Reservation Confirmed</h2>
-              <p className="text-gray-400 mb-8">
-                Thank you, {formData.name}. We look forward to hosting you on {formData.date} at {formData.time}.
+              <h2 className="text-4xl font-serif text-white mb-4">Reservation Confirmed</h2>
+              <p className="text-gray-400 mb-10 text-lg max-w-lg mx-auto">
+                Thank you, {formData.name || 'Guest'}. We look forward to hosting you on {formData.date} at {formData.time}.
               </p>
               <button
                 onClick={() => {
                   setIsSubmitted(false);
                   setFormData({ name: '', phone: '', date: '', time: '', guests: '', occasion: '' });
                 }}
-                className="text-primary-gold hover:text-white transition-colors duration-300 border-b border-primary-gold pb-1"
+                className="text-primary-gold hover:text-white transition-colors duration-300 border-b-2 border-primary-gold pb-1 font-bold text-lg tracking-wide"
               >
-                Make another reservation
+                Make Another Reservation
               </button>
             </motion.div>
           )}
