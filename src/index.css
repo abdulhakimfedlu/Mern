@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
+<<<<<<< HEAD
 @import "tailwindcss";
 
 @keyframes float {
@@ -24,6 +25,20 @@
     opacity: 1;
     transform: translateY(0);
   }
+=======
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+>>>>>>> a891032ef8186442230062a313fc06b16f614fae
 }
 
 .parallax {
