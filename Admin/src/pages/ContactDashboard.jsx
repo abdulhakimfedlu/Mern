@@ -95,7 +95,7 @@ const ContactDashboard = () => {
                                         </div>
                                         <div>
                                             <h3 className="text-white font-bold font-serif">{msg.name}</h3>
-                                            <p className="text-gray-400 text-xs">{msg.email}</p>
+                                            <p className="text-gray-400 text-xs">{msg.phone || 'No phone'}</p>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-2 text-gray-500 text-xs">

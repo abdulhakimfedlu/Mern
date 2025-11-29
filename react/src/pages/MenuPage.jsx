@@ -229,7 +229,7 @@ const MenuPage = () => {
                         className="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-500"
                       />
                       <div className="absolute top-4 right-4 bg-primary-gold text-primary-dark px-3 py-1 rounded-full font-bold">
-                        ${item.price}
+                        {item.price} ETB
                       </div>
                     </div>
                     <div className="p-6">
@@ -294,11 +294,11 @@ const MenuPage = () => {
                 <div className="text-sm opacity-80">items</div>
               </div>
               <div className="text-center">
-                <div className="font-bold text-2xl">${totalPrice.toFixed(2)}</div>
+                <div className="font-bold text-2xl">{totalPrice.toFixed(2)} ETB</div>
                 <div className="text-sm opacity-80">total</div>
               </div>
               <div className="flex space-x-3">
-                <Link to="/order/cafe" state={{ cartItems }} onClick={() => console.log('Navigating to Cafe with:', cartItems)}>
+                <Link to="/order/cafe" state={{ cartItems }}>
                   <motion.button
                     className="bg-primary-dark text-primary-gold px-6 py-2 rounded-full font-semibold hover:bg-opacity-80 transition-colors"
                     whileHover={{ scale: 1.05 }}
@@ -307,7 +307,7 @@ const MenuPage = () => {
                     Order in Café
                   </motion.button>
                 </Link>
-                <Link to="/order/delivery" state={{ cartItems }} onClick={() => console.log('Navigating to Delivery with:', cartItems)}>
+                <Link to="/order/delivery" state={{ cartItems }}>
                   <motion.button
                     className="bg-primary-red text-white px-6 py-2 rounded-full font-semibold hover:bg-red-800 transition-colors"
                     whileHover={{ scale: 1.05 }}
