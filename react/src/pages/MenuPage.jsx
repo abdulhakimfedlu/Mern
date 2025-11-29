@@ -12,7 +12,6 @@ const MenuPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch food items from backend on component mount
   useEffect(() => {
     const fetchMenuItems = async () => {
       try {
@@ -31,7 +30,6 @@ const MenuPage = () => {
     fetchMenuItems();
   }, []);
 
-  // Dynamically extract unique categories from food items
   const categories = React.useMemo(() => {
     const uniqueCategories = [...new Set(foodItems.map(item => item.category))];
     return [
@@ -62,16 +60,10 @@ const MenuPage = () => {
     });
   };
 
-  // Helper function to get all items
-  const getAllItems = () => {
-    return foodItems;
-  };
-
   const getCartItems = () => {
-    const allItems = getAllItems();
     return Object.entries(cart)
       .map(([id, quantity]) => {
-        const item = allItems.find(item => item._id === id);
+        const item = foodItems.find(item => item._id === id);
         if (!item) return null;
         return { ...item, quantity };
       })
@@ -84,7 +76,7 @@ const MenuPage = () => {
 
   const filteredItems = (() => {
     let items = selectedCategory === 'all'
-      ? getAllItems()
+      ? foodItems
       : foodItems.filter(item => item.category.toLowerCase() === selectedCategory.toLowerCase());
 
     if (searchTerm) {
@@ -97,7 +89,6 @@ const MenuPage = () => {
     return items;
   })();
 
-  // Loading state
   if (loading) {
     return (
       <div className="pt-32 min-h-screen bg-primary-dark flex items-center justify-center">
@@ -109,7 +100,6 @@ const MenuPage = () => {
     );
   }
 
-  // Error state
   if (error) {
     return (
       <div className="pt-32 min-h-screen bg-primary-dark flex items-center justify-center">
@@ -130,7 +120,7 @@ const MenuPage = () => {
 
   return (
     <div className="pt-32">
-      {/* Minimal Hero Section */}
+      {/* Hero Section */}
       <section className="relative py-8 bg-gradient-to-br from-primary-dark via-black to-primary-brown">
         <div className="container mx-auto px-6">
           <motion.div
@@ -146,14 +136,14 @@ const MenuPage = () => {
               OUR MENU
             </h1>
             <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-6 leading-relaxed">
-              Discover our carefully curated selection of artisanal dishes, crafted with the finest ingredients and inspired by culinary traditions from around the world.
+              Discover our carefully curated selection of artisanal dishes
             </p>
             <div className="h-px w-24 bg-gradient-to-r from-transparent via-primary-gold to-transparent mx-auto" />
           </motion.div>
         </div>
       </section>
 
-      {/* Menu Navigation & Content */}
+      {/* Menu Content */}
       <section className="py-20 bg-primary-dark">
         <div className="container mx-auto px-6">
           {/* Search Bar */}
@@ -181,7 +171,7 @@ const MenuPage = () => {
           </motion.div>
 
           <div className="flex gap-8">
-            {/* Left Sidebar - Categories */}
+            {/* Categories Sidebar */}
             <motion.div
               className="w-64 flex-shrink-0"
               initial={{ opacity: 0, x: -30 }}
@@ -197,8 +187,8 @@ const MenuPage = () => {
                       key={category.id}
                       onClick={() => setSelectedCategory(category.id)}
                       className={`w-full text-left px-4 py-3 rounded-lg font-medium transition-all duration-300 ${selectedCategory === category.id
-                        ? 'bg-primary-gold text-primary-dark'
-                        : 'text-gray-300 hover:text-white hover:bg-primary-dark/50'
+                          ? 'bg-primary-gold text-primary-dark'
+                          : 'text-gray-300 hover:text-white hover:bg-primary-dark/50'
                         }`}
                     >
                       {category.name}
@@ -208,20 +198,32 @@ const MenuPage = () => {
               </div>
             </motion.div>
 
-            {/* Main Content Area */}
+            {/* Menu Items Grid */}
             <div className="flex-1">
-              {/* Menu Items Grid */}
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredItems.map((item, index) => (
                   <motion.div
                     key={item._id}
-                    className="bg-primary-brown rounded-2xl overflow-hidden shadow-2xl group"
+                    className="bg-primary-brown rounded-2xl overflow-hidden shadow-2xl group relative"
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     viewport={{ once: true }}
                     whileHover={{ scale: 1.02 }}
                   >
+                    {/* Badge */}
+                    {item.badge && (
+                      <div className="absolute top-4 left-4 z-10 bg-gradient-to-r from-primary-gold to-yellow-500 text-primary-dark px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                        {item.badge === 'Best Seller' && '🏆 '}
+                        {item.badge === 'Special' && '⭐ '}
+                        {item.badge === 'New' && '🆕 '}
+                        {item.badge === 'Chef\'s Choice' && '👨‍🍳 '}
+                        {item.badge === 'Limited' && '⏰ '}
+                        {item.badge}
+                      </div>
+                    )}
+
+                    {/* Image */}
                     <div className="relative overflow-hidden">
                       <img
                         src={item.image.startsWith('/uploads') ? `http://localhost:5000${item.image}` : item.image}
@@ -232,10 +234,13 @@ const MenuPage = () => {
                         {item.price} ETB
                       </div>
                     </div>
+
+                    {/* Content */}
                     <div className="p-6">
                       <h3 className="text-2xl font-serif font-bold mb-2 text-white">{item.name}</h3>
                       <p className="text-gray-400 mb-4 leading-relaxed">{item.description}</p>
 
+                      {/* Cart Controls */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
                           <button
@@ -261,7 +266,7 @@ const MenuPage = () => {
                 ))}
               </div>
 
-              {/* No Results Message */}
+              {/* No Results */}
               {filteredItems.length === 0 && (
                 <motion.div
                   className="text-center py-12"
@@ -279,7 +284,7 @@ const MenuPage = () => {
         </div>
       </section>
 
-      {/* Cart Summary Sticky Bar */}
+      {/* Cart Summary */}
       {totalItems > 0 && (
         <motion.div
           className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-primary-gold text-primary-dark rounded-full shadow-2xl z-40"

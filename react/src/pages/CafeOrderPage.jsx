@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Utensils, AlertCircle, Check } from 'lucide-react';
+import { Utensils, AlertCircle } from 'lucide-react';
 import api from '../api/axios';
 import Notification from '../components/Notification';
 
@@ -40,7 +40,7 @@ const CafeOrderPage = () => {
         table: orderDetails.tableNumber,
         specialRequest: orderDetails.specialRequests,
         type: 'cafe',
-        status: 'pending',
+        status: 'Pending',
         items: cartItems.map(item => ({
           itemId: item._id,
           name: item.name,
@@ -51,6 +51,8 @@ const CafeOrderPage = () => {
         }))
       };
 
+      console.log('Submitting cafe order:', orderData);
+
       await api.post('/orders', orderData);
 
       setNotification({
@@ -58,13 +60,13 @@ const CafeOrderPage = () => {
         message: 'Order placed successfully! Your food will be served shortly.'
       });
 
-      // Redirect after success
       setTimeout(() => {
         navigate('/menu');
       }, 3000);
 
     } catch (error) {
       console.error('Order submission error:', error);
+      console.error('Error response:', error.response?.data);
       setNotification({
         type: 'error',
         message: error.response?.data?.message || 'Failed to place order. Please try again.'
@@ -155,7 +157,7 @@ const CafeOrderPage = () => {
                 </div>
 
                 <div className="space-y-4 mb-8 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
-                  {cartItems.map((item, index) => (
+                  {cartItems.map((item) => (
                     <div
                       key={item._id}
                       className="flex items-center gap-4 p-4 bg-primary-dark/40 rounded-2xl border border-primary-gold/10"

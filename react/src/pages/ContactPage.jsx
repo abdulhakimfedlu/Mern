@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Phone, MapPin, Clock, Send, Instagram, Facebook, Twitter } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Phone, MapPin, Clock, Send, Instagram, Facebook, Twitter, UserX } from 'lucide-react';
 import Notification from '../components/Notification';
 import api from '../api/axios';
 
@@ -10,6 +10,7 @@ const ContactPage = () => {
     phone: '',
     message: ''
   });
+  const [isAnonymous, setIsAnonymous] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notification, setNotification] = useState(null);
 
@@ -25,22 +26,29 @@ const ContactPage = () => {
     setIsSubmitting(true);
 
     try {
-      await api.post('/contact', {
-        name: formData.name,
-        phone: formData.phone,
+      const payload = {
         message: formData.message,
-        subject: 'General Inquiry' // Default subject since field is removed
-      });
+        isAnonymous: isAnonymous,
+        subject: 'General Inquiry'
+      };
+
+      if (!isAnonymous) {
+        payload.name = formData.name;
+        payload.phone = formData.phone;
+      }
+
+      await api.post('/contact', payload);
 
       setNotification({
         type: 'success',
-        message: 'Thank you! Your message has been sent successfully.'
+        message: isAnonymous ? 'Your anonymous message has been sent!' : 'Thank you! Your message has been sent successfully.'
       });
       setFormData({
         name: '',
         phone: '',
         message: ''
       });
+      setIsAnonymous(false);
     } catch (error) {
       console.error('Error sending message:', error);
       setNotification({
@@ -54,13 +62,15 @@ const ContactPage = () => {
 
   return (
     <div className="pt-32 min-h-screen bg-primary-dark">
-      {notification && (
-        <Notification
-          message={notification.message}
-          type={notification.type}
-          onClose={() => setNotification(null)}
-        />
-      )}
+      <AnimatePresence>
+        {notification && (
+          <Notification
+            message={notification.message}
+            type={notification.type}
+            onClose={() => setNotification(null)}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-br from-primary-dark via-black to-primary-brown overflow-hidden">
@@ -158,34 +168,73 @@ const ContactPage = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="bg-primary-brown rounded-3xl p-8 md:p-12 border border-primary-gold/20 shadow-2xl"
           >
-            <h2 className="text-3xl font-serif font-bold text-white mb-8">Send a Message</h2>
+            <h2 className="text-3xl font-serif font-bold text-white mb-2">Send a Message</h2>
+            <p className="text-gray-400 text-sm mb-8">Share your thoughts with us, anonymously or with your details</p>
+
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-primary-gold text-sm font-bold mb-2">Your Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-primary-dark/50 border border-primary-gold/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary-gold transition-colors"
-                  placeholder="Abebe Kebede"
-                />
+              {/* Anonymous Toggle */}
+              <div className="flex items-center justify-between p-4 bg-primary-dark/30 rounded-xl border border-primary-gold/20">
+                <div className="flex items-center space-x-3">
+                  <UserX className="w-5 h-5 text-primary-gold" />
+                  <div>
+                    <p className="text-white font-semibold">Send Anonymously</p>
+                    <p className="text-gray-400 text-xs">Your identity will remain private</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsAnonymous(!isAnonymous)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${isAnonymous ? 'bg-primary-gold' : 'bg-gray-600'
+                    }`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${isAnonymous ? 'translate-x-6' : 'translate-x-1'
+                      }`}
+                  />
+                </button>
               </div>
 
-              <div>
-                <label className="block text-primary-gold text-sm font-bold mb-2">Phone Number</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-primary-dark/50 border border-primary-gold/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary-gold transition-colors"
-                  placeholder="+251..."
-                />
-              </div>
+              {/* Name Field - Hidden when anonymous */}
+              {!isAnonymous && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                >
+                  <label className="block text-primary-gold text-sm font-bold mb-2">Your Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required={!isAnonymous}
+                    className="w-full bg-primary-dark/50 border border-primary-gold/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary-gold transition-colors"
+                    placeholder="Abebe Kebede"
+                  />
+                </motion.div>
+              )}
 
+              {/* Phone Field - Hidden when anonymous */}
+              {!isAnonymous && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                >
+                  <label className="block text-primary-gold text-sm font-bold mb-2">Phone Number</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required={!isAnonymous}
+                    className="w-full bg-primary-dark/50 border border-primary-gold/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary-gold transition-colors"
+                    placeholder="+251..."
+                  />
+                </motion.div>
+              )}
+
+              {/* Message Field - Always visible */}
               <div>
                 <label className="block text-primary-gold text-sm font-bold mb-2">Message</label>
                 <textarea
@@ -210,7 +259,7 @@ const ContactPage = () => {
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary-dark"></div>
                 ) : (
                   <>
-                    <span>Send Message</span>
+                    <span>{isAnonymous ? 'Send Anonymously' : 'Send Message'}</span>
                     <Send size={18} />
                   </>
                 )}
